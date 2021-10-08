@@ -1,3 +1,5 @@
+@file:Suppress("unused")
+
 package community.flock.kmonad.core
 
 import arrow.core.Either.Left

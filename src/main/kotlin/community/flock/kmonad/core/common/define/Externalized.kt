@@ -1,5 +1,5 @@
 package community.flock.kmonad.core.common.define
 
-interface Externalizable<T> {
+interface Externalized<T> {
     fun externalize(): T
 }
