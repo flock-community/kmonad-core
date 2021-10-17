@@ -6,6 +6,7 @@ import kotlinx.coroutines.flow.Flow
 import java.util.UUID
 
 interface Repository : Dependency {
+
     suspend fun getAll(): Flow<Sith>
 
     suspend fun getByUUID(uuid: UUID): Sith
@@ -13,8 +14,5 @@ interface Repository : Dependency {
     suspend fun save(sith: Sith): Sith
 
     suspend fun deleteByUUID(uuid: UUID): Sith
-}
 
-interface HasRepository {
-    val sithRepository: Repository
 }

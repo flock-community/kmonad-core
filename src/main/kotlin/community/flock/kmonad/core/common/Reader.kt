@@ -1,8 +1,8 @@
 package community.flock.kmonad.core.common
 
-class Reader<D, out A>(val provide: suspend (D) -> A) {
+class Reader<D, out A>(val provide: (D) -> A) {
 
-    inline fun <B> map(crossinline fa: suspend (A) -> B): Reader<D, B> = Reader { fa(provide(it)) }
+    inline fun <B> map(crossinline fa: (A) -> B): Reader<D, B> = Reader { fa(provide(it)) }
 
     inline fun <B> flatMap(crossinline fa: (A) -> Reader<D, B>): Reader<D, B> = Reader { fa(provide(it)).provide(it) }
 
