@@ -1,15 +1,15 @@
 package community.flock.kmonad.core.common
 
-class Reader<D, out A>(val provide: (D) -> A) {
+class Reader<R, out A>(val provide: (R) -> A) {
 
-    inline fun <B> map(crossinline fa: (A) -> B): Reader<D, B> = Reader { fa(provide(it)) }
+    inline fun <B> map(crossinline fa: (A) -> B): Reader<R, B> = Reader { fa(provide(it)) }
 
-    inline fun <B> flatMap(crossinline fa: (A) -> Reader<D, B>): Reader<D, B> = Reader { fa(provide(it)).provide(it) }
+    inline fun <B> flatMap(crossinline fa: (A) -> Reader<R, B>): Reader<R, B> = Reader { fa(provide(it)).provide(it) }
 
     companion object Factory {
-        fun <D, A> just(a: A): Reader<D, A> = Reader { a }
+        fun <R, A> just(a: A): Reader<R, A> = Reader { a }
 
-        fun <D> ask(): Reader<D, D> = Reader { it }
+        fun <R> ask(): Reader<R, R> = Reader { it }
     }
 
 }

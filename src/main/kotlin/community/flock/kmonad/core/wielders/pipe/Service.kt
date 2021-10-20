@@ -16,15 +16,15 @@ import community.flock.kmonad.core.sith.pipe.getAll as getAllSith
 import community.flock.kmonad.core.sith.pipe.getByUUID as getSithByUUID
 
 @ExperimentalCoroutinesApi
-suspend fun <D> D.getAll() where D : Has.JediRepository, D : Has.SithRepository, D : Has.Logger = getAllJedi<D>()
+suspend fun <R> R.getAll() where R : Has.JediRepository, R : Has.SithRepository, R : Has.Logger = getAllJedi<R>()
     .provide(this)
     .runUnsafe()
     .getOrHandle { throw it }
     .map { it.toForceWielder() } + getAllSith()
     .map { it.toForceWielder() }
 
-suspend fun <D> D.getByUUID(uuid: UUID): ForceWielder where D : Has.JediRepository, D : Has.SithRepository, D : Has.Logger {
-    val jedi = getJediByUUID<D>(uuid)
+suspend fun <R> R.getByUUID(uuid: UUID): ForceWielder where R : Has.JediRepository, R : Has.SithRepository, R : Has.Logger {
+    val jedi = getJediByUUID<R>(uuid)
         .provide(this)
         .runUnsafe()
         .map { it.toForceWielder() }

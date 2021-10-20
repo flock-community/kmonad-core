@@ -13,4 +13,4 @@ sealed class AppException(message: String, cause: Throwable? = null) : RuntimeEx
     class InternalServerError(cause: Throwable? = null) : AppException("Internal Server Error", cause)
 }
 
-fun <D> AppException.toReader() = just<D, IO<Either<AppException, Nothing>>>(IO { left() })
+fun <R> AppException.toReader() = just<R, IO<Either<AppException, Nothing>>>(IO { left() })

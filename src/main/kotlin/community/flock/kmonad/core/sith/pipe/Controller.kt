@@ -18,7 +18,7 @@ suspend fun Context.bindPost(sith: Sith) = save(sith)
 suspend fun Context.bindDelete(uuidString: String?) = deleteByUUID(validate { UUID.fromString(uuidString) })
 
 
-private fun <R> validate(block: () -> R) = try {
+private fun <A> validate(block: () -> A) = try {
     block()
 } catch (e: Exception) {
     throw AppException.BadRequest()

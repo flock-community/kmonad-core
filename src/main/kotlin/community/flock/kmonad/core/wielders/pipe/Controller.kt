@@ -23,7 +23,7 @@ suspend fun Context.bindGet() = getAll()
 suspend fun Context.bindGet(uuidString: String?) = getByUUID(validate { UUID.fromString(uuidString) })
 
 
-private fun <R> validate(block: () -> R) = try {
+private fun <A> validate(block: () -> A) = try {
     block()
 } catch (e: Exception) {
     throw AppException.BadRequest(e)

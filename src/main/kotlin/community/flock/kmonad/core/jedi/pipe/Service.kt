@@ -6,19 +6,19 @@ import community.flock.kmonad.core.jedi.data.Jedi
 import java.util.UUID
 
 
-fun <D> getAll() where D : Has.JediRepository, D : Has.Logger = Reader { d: D ->
-    d.jediRepository.getAll()
-        .also { it.map { flow -> d.logger.log(flow.toString()) } }
+fun <R> getAll() where R : Has.JediRepository, R : Has.Logger = Reader { r: R ->
+    r.jediRepository.getAll()
+        .also { it.map { flow -> r.logger.log(flow.toString()) } }
 }
 
-fun <D> getByUUID(uuid: UUID) where D : Has.JediRepository = Reader { d: D ->
-    d.jediRepository.getByUUID(uuid)
+fun <R> getByUUID(uuid: UUID) where R : Has.JediRepository = Reader { r: R ->
+    r.jediRepository.getByUUID(uuid)
 }
 
-fun <D> save(jedi: Jedi) where D : Has.JediRepository = Reader { d: D ->
-    d.jediRepository.save(jedi)
+fun <R> save(jedi: Jedi) where R : Has.JediRepository = Reader { r: R ->
+    r.jediRepository.save(jedi)
 }
 
-fun <D> deleteByUUID(uuid: UUID) where D : Has.JediRepository = Reader { d: D ->
-    d.jediRepository.deleteByUUID(uuid)
+fun <R> deleteByUUID(uuid: UUID) where R : Has.JediRepository = Reader { r: R ->
+    r.jediRepository.deleteByUUID(uuid)
 }

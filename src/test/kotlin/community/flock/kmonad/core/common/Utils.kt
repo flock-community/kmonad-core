@@ -6,7 +6,7 @@ import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.Assertions
 import kotlin.reflect.KClass
 
-fun <T : AppException> assertThrows(clazz: KClass<T>, block: suspend () -> Data) {
+fun <E : AppException> assertThrows(clazz: KClass<E>, block: suspend () -> Data) {
     Assertions.assertThrows(clazz.java) {
         runBlocking { block() }
     }

@@ -23,7 +23,7 @@ fun bindDelete(uuidString: String?) = validate { UUID.fromString(uuidString) }
     .fold({ it.toReader() }, { deleteByUUID<Context>(it) })
 
 
-private fun <R> validate(block: () -> R) = try {
+private fun <A> validate(block: () -> A) = try {
     Right(block())
 } catch (e: Exception) {
     Left(AppException.BadRequest())
