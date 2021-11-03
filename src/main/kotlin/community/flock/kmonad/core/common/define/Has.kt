@@ -14,4 +14,8 @@ sealed interface Has {
         val sithRepository: community.flock.kmonad.core.sith.pipe.Repository
     }
 
+    interface DroidRepository {
+        val droidRepository: community.flock.kmonad.core.droids.pipe.Repository
+    }
+
 }

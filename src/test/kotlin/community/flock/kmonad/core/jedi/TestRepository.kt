@@ -18,7 +18,7 @@ object TestRepository : Repository {
     const val lukeUUID = "220ae1b9-6300-4082-a2f0-5884aabc1bac"
     const val yodaUUID = "0049d4f0-122f-49a9-a588-d7b9296b4b9f"
 
-    private val allJedi = mutableMapOf(
+    private val allJedi = mapOf(
         lukeUUID to Jedi(id = lukeUUID, name = "Luke", age = 23),
         yodaUUID to Jedi(id = yodaUUID, name = "Yoda", age = 900)
     )
