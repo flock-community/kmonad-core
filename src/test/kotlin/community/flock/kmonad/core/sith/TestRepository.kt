@@ -17,7 +17,7 @@ object TestRepository : Repository {
         vaderUUID to Sith(id = vaderUUID, name = "Darth Vader", age = 45)
     )
 
-    override suspend fun getAll() = allSith.map { (_, sith) -> sith }.asFlow()
+    override suspend fun getAll() = allSith.map { it.value }.asFlow()
 
     override suspend fun getByUUID(uuid: UUID): Sith = allSith[uuid.toString()] ?: throw NotFound(uuid)
 

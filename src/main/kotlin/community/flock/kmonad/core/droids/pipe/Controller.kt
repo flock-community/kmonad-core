@@ -4,6 +4,7 @@ import arrow.core.computations.either
 import arrow.core.left
 import arrow.core.right
 import community.flock.kmonad.core.AppException
+import community.flock.kmonad.core.AppException.BadRequest
 import community.flock.kmonad.core.common.define.Has
 import community.flock.kmonad.core.droids.data.Droid
 import kotlinx.coroutines.flow.Flow
@@ -33,4 +34,4 @@ suspend fun Context.bindDelete(uuidString: String?) = either<AppException, Droid
 
 
 private fun <A> validate(block: () -> A) = runCatching(block)
-    .fold({ it.right() }, { AppException.BadRequest(it).left() })
+    .fold({ it.right() }, { BadRequest(it).left() })

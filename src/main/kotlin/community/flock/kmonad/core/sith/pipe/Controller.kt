@@ -1,6 +1,6 @@
 package community.flock.kmonad.core.sith.pipe
 
-import community.flock.kmonad.core.AppException
+import community.flock.kmonad.core.AppException.BadRequest
 import community.flock.kmonad.core.common.define.Has
 import community.flock.kmonad.core.sith.data.Sith
 import java.util.UUID
@@ -21,5 +21,5 @@ suspend fun Context.bindDelete(uuidString: String?) = deleteByUUID(validate { UU
 private fun <A> validate(block: () -> A) = try {
     block()
 } catch (e: Exception) {
-    throw AppException.BadRequest()
+    throw BadRequest()
 }

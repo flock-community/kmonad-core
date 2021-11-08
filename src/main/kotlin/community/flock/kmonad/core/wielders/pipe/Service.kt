@@ -1,7 +1,8 @@
 package community.flock.kmonad.core.wielders.pipe
 
 import arrow.core.getOrHandle
-import community.flock.kmonad.core.AppException
+import community.flock.kmonad.core.AppException.InternalServerError
+import community.flock.kmonad.core.AppException.NotFound
 import community.flock.kmonad.core.common.define.Has
 import community.flock.kmonad.core.wielders.data.ForceWielder
 import community.flock.kmonad.core.wielders.data.toForceWielder
@@ -34,8 +35,8 @@ suspend fun <R> R.getByUUID(uuid: UUID): ForceWielder where R : Has.JediReposito
         .getOrNull()
     val forceWielder = with(jedi to sith) {
         when {
-            bothAreNull() -> throw AppException.NotFound(uuid)
-            bothAreNotNull() -> throw AppException.InternalServerError()
+            bothAreNull() -> throw NotFound(uuid)
+            bothAreNotNull() -> throw InternalServerError()
             else -> pick()
         }
     }

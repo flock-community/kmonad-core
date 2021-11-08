@@ -2,7 +2,8 @@ package community.flock.kmonad.core.droids
 
 import arrow.core.left
 import arrow.core.right
-import community.flock.kmonad.core.AppException
+import community.flock.kmonad.core.AppException.Conflict
+import community.flock.kmonad.core.AppException.NotFound
 import community.flock.kmonad.core.droids.data.Droid
 import community.flock.kmonad.core.droids.pipe.Repository
 import kotlinx.coroutines.flow.asFlow
@@ -18,13 +19,13 @@ object TestRepository : Repository {
         r2d2UUID to Droid(id = r2d2UUID, designation = "R2D2", type = Droid.Type.Astromech)
     )
 
-    override suspend fun getAll() = allDroids.map { (_, sith) -> sith }.asFlow().right()
+    override suspend fun getAll() = allDroids.map { it.value }.asFlow().right()
 
     override suspend fun getByUUID(uuid: UUID) =
-        allDroids[uuid.toString()]?.right() ?: AppException.NotFound(uuid).left()
+        allDroids[uuid.toString()]?.right() ?: NotFound(uuid).left()
 
     override suspend fun save(droid: Droid) =
-        if (allDroids.contains(droid.id)) AppException.Conflict(UUID.fromString(droid.id)).left()
+        if (allDroids.contains(droid.id)) Conflict(UUID.fromString(droid.id)).left()
         else droid.right()
 
     override suspend fun deleteByUUID(uuid: UUID) = getByUUID(uuid)

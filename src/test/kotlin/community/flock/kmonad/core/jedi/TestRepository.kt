@@ -24,7 +24,7 @@ object TestRepository : Repository {
     )
 
     override fun getAll(): IO<Either<AppException, Flow<Jedi>>> =
-        IO { allJedi.map { (_, jedi) -> jedi }.asFlow().right() }
+        IO { allJedi.map { it.value }.asFlow().right() }
 
     override fun getByUUID(uuid: UUID): IO<Either<AppException, Jedi>> = IO {
         allJedi[uuid.toString()]?.right() ?: NotFound(uuid).left()

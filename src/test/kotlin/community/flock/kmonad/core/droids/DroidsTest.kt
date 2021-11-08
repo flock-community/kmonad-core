@@ -4,6 +4,7 @@ import arrow.core.computations.EitherEffect
 import arrow.core.computations.either
 import arrow.core.getOrHandle
 import community.flock.kmonad.core.AppException
+import community.flock.kmonad.core.AppException.BadRequest
 import community.flock.kmonad.core.common.TestLogger
 import community.flock.kmonad.core.common.assertLeft
 import community.flock.kmonad.core.common.define.Logger
@@ -37,7 +38,7 @@ class DroidsTest {
 
     @Test
     fun testBindGetByUUID() = runTest {
-        assertLeft(AppException.BadRequest::class) { context.bindGet("Not a UUID") }
+        assertLeft(BadRequest::class) { context.bindGet("Not a UUID") }
         val droid = context.bindGet(TestRepository.c3poUUID).bind()
         droid.assertC3PO()
     }
@@ -51,7 +52,7 @@ class DroidsTest {
 
     @Test
     fun testBindDelete() = runTest {
-        assertLeft(AppException.BadRequest::class) { context.bindDelete("Not a UUID") }
+        assertLeft(BadRequest::class) { context.bindDelete("Not a UUID") }
         val droid = context.bindDelete(TestRepository.c3poUUID).bind()
         droid.assertC3PO()
     }

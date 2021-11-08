@@ -1,6 +1,6 @@
 package community.flock.kmonad.core.wielders.pipe
 
-import community.flock.kmonad.core.AppException
+import community.flock.kmonad.core.AppException.BadRequest
 import community.flock.kmonad.core.common.define.Logger
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import java.util.UUID
@@ -26,5 +26,5 @@ suspend fun Context.bindGet(uuidString: String?) = getByUUID(validate { UUID.fro
 private fun <A> validate(block: () -> A) = try {
     block()
 } catch (e: Exception) {
-    throw AppException.BadRequest(e)
+    throw BadRequest(e)
 }
