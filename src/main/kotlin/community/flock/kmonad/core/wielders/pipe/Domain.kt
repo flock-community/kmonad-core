@@ -3,7 +3,9 @@ package community.flock.kmonad.core.wielders.pipe
 import arrow.core.getOrHandle
 import community.flock.kmonad.core.AppException.InternalServerError
 import community.flock.kmonad.core.AppException.NotFound
-import community.flock.kmonad.core.common.define.Has
+import community.flock.kmonad.core.common.define.HasLogger
+import community.flock.kmonad.core.jedi.pipe.HasJediRepository
+import community.flock.kmonad.core.sith.pipe.HasSithRepository
 import community.flock.kmonad.core.wielders.data.ForceWielder
 import community.flock.kmonad.core.wielders.data.toForceWielder
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -17,14 +19,14 @@ import community.flock.kmonad.core.sith.pipe.getAll as getAllSith
 import community.flock.kmonad.core.sith.pipe.getByUUID as getSithByUUID
 
 @ExperimentalCoroutinesApi
-suspend fun <R> R.getAll() where R : Has.JediRepository, R : Has.SithRepository, R : Has.Logger = getAllJedi<R>()
+suspend fun <R> R.getAll() where R : HasJediRepository, R : HasSithRepository, R : HasLogger = getAllJedi<R>()
     .provide(this)
     .runUnsafe()
     .getOrHandle { throw it }
     .map { it.toForceWielder() } + getAllSith()
     .map { it.toForceWielder() }
 
-suspend fun <R> R.getByUUID(uuid: UUID): ForceWielder where R : Has.JediRepository, R : Has.SithRepository, R : Has.Logger {
+suspend fun <R> R.getByUUID(uuid: UUID): ForceWielder where R : HasJediRepository, R : HasSithRepository, R : HasLogger {
     val jedi = getJediByUUID<R>(uuid)
         .provide(this)
         .runUnsafe()

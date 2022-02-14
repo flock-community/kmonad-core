@@ -5,13 +5,13 @@ import arrow.core.left
 import arrow.core.right
 import community.flock.kmonad.core.AppException
 import community.flock.kmonad.core.AppException.BadRequest
-import community.flock.kmonad.core.common.define.Has
+import community.flock.kmonad.core.common.define.HasLogger
 import community.flock.kmonad.core.droids.data.Droid
 import kotlinx.coroutines.flow.Flow
 import java.util.UUID
 
 
-interface Context : Has.DroidRepository, Has.Logger
+interface Context : HasDroidRepository, HasLogger
 
 
 suspend fun Context.bindGet() = either<AppException, Flow<Droid>> {

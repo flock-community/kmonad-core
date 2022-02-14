@@ -8,6 +8,10 @@ import community.flock.kmonad.core.jedi.data.Jedi
 import kotlinx.coroutines.flow.Flow
 import java.util.UUID
 
+interface HasJediRepository {
+    val jediRepository: Repository
+}
+
 interface Repository : Dependency {
 
     fun getAll(): IO<Either<AppException, Flow<Jedi>>>

@@ -1,12 +1,12 @@
 package community.flock.kmonad.core.sith.pipe
 
 import community.flock.kmonad.core.AppException.BadRequest
-import community.flock.kmonad.core.common.define.Has
+import community.flock.kmonad.core.common.define.HasLogger
 import community.flock.kmonad.core.sith.data.Sith
 import java.util.UUID
 
 
-interface Context : Has.SithRepository, Has.Logger
+interface Context : HasSithRepository, HasLogger
 
 
 suspend fun Context.bindGet() = getAll()

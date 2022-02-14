@@ -5,6 +5,10 @@ import community.flock.kmonad.core.sith.data.Sith
 import kotlinx.coroutines.flow.Flow
 import java.util.UUID
 
+interface HasSithRepository {
+    val sithRepository: Repository
+}
+
 interface Repository : Dependency {
 
     suspend fun getAll(): Flow<Sith>

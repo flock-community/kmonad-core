@@ -3,13 +3,13 @@ package community.flock.kmonad.core.jedi.pipe
 import arrow.core.left
 import arrow.core.right
 import community.flock.kmonad.core.AppException.BadRequest
-import community.flock.kmonad.core.common.define.Has
+import community.flock.kmonad.core.common.define.HasLogger
 import community.flock.kmonad.core.jedi.data.Jedi
 import community.flock.kmonad.core.toReader
 import java.util.UUID
 
 
-interface Context : Has.Logger, Has.JediRepository
+interface Context : HasLogger, HasJediRepository
 
 
 fun bindGet() = getAll<Context>()

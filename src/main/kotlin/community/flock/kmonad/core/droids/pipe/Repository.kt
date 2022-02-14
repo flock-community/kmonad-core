@@ -7,6 +7,10 @@ import community.flock.kmonad.core.droids.data.Droid
 import kotlinx.coroutines.flow.Flow
 import java.util.UUID
 
+interface HasDroidRepository {
+    val droidRepository: Repository
+}
+
 interface Repository : Dependency {
 
     suspend fun getAll(): Either<AppException, Flow<Droid>>
