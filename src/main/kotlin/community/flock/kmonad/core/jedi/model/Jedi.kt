@@ -1,4 +1,4 @@
-package community.flock.kmonad.core.jedi.data
+package community.flock.kmonad.core.jedi.model
 
 import community.flock.kmonad.core.common.define.Data
 import java.util.UUID

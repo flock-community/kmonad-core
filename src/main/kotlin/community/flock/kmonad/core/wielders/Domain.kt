@@ -1,33 +1,38 @@
-package community.flock.kmonad.core.wielders.pipe
+package community.flock.kmonad.core.wielders
 
 import arrow.core.getOrHandle
 import community.flock.kmonad.core.AppException.InternalServerError
 import community.flock.kmonad.core.AppException.NotFound
 import community.flock.kmonad.core.common.define.HasLogger
-import community.flock.kmonad.core.jedi.pipe.HasJediRepository
-import community.flock.kmonad.core.sith.pipe.HasSithRepository
-import community.flock.kmonad.core.wielders.data.ForceWielder
-import community.flock.kmonad.core.wielders.data.toForceWielder
+import community.flock.kmonad.core.jedi.HasJediRepository
+import community.flock.kmonad.core.sith.HasSithRepository
+import community.flock.kmonad.core.wielders.model.ForceWielder
+import community.flock.kmonad.core.wielders.model.toForceWielder
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.merge
 import java.util.UUID
-import community.flock.kmonad.core.jedi.pipe.getAll as getAllJedi
-import community.flock.kmonad.core.jedi.pipe.getByUUID as getJediByUUID
-import community.flock.kmonad.core.sith.pipe.getAll as getAllSith
-import community.flock.kmonad.core.sith.pipe.getByUUID as getSithByUUID
+import community.flock.kmonad.core.jedi.getAll as getAllJedi
+import community.flock.kmonad.core.jedi.getByUUID as getJediByUUID
+import community.flock.kmonad.core.sith.getAll as getAllSith
+import community.flock.kmonad.core.sith.getByUUID as getSithByUUID
+
+
+interface Domain : HasJediRepository, HasSithRepository, HasLogger
+
 
 @ExperimentalCoroutinesApi
-suspend fun <R> R.getAll() where R : HasJediRepository, R : HasSithRepository, R : HasLogger = getAllJedi<R>()
+suspend fun Domain.getAll() = getAllJedi<Domain>()
     .provide(this)
     .runUnsafe()
     .getOrHandle { throw it }
     .map { it.toForceWielder() } + getAllSith()
     .map { it.toForceWielder() }
+    .also { logger.log() }
 
-suspend fun <R> R.getByUUID(uuid: UUID): ForceWielder where R : HasJediRepository, R : HasSithRepository, R : HasLogger {
-    val jedi = getJediByUUID<R>(uuid)
+suspend fun Domain.getByUUID(uuid: UUID): ForceWielder {
+    val jedi = getJediByUUID<Domain>(uuid)
         .provide(this)
         .runUnsafe()
         .map { it.toForceWielder() }
@@ -37,8 +42,8 @@ suspend fun <R> R.getByUUID(uuid: UUID): ForceWielder where R : HasJediRepositor
         .getOrNull()
     val forceWielder = with(jedi to sith) {
         when {
-            bothAreNull() -> throw NotFound(uuid)
-            bothAreNotNull() -> throw InternalServerError()
+            bothAreNull() -> throw NotFound(uuid).also { logger.warn() }
+            bothAreNotNull() -> throw InternalServerError().also { logger.error() }
             else -> pick()
         }
     }

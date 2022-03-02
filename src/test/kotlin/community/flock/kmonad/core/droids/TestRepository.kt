@@ -4,8 +4,7 @@ import arrow.core.left
 import arrow.core.right
 import community.flock.kmonad.core.AppException.Conflict
 import community.flock.kmonad.core.AppException.NotFound
-import community.flock.kmonad.core.droids.data.Droid
-import community.flock.kmonad.core.droids.pipe.Repository
+import community.flock.kmonad.core.droids.model.Droid
 import kotlinx.coroutines.flow.asFlow
 import java.util.UUID
 

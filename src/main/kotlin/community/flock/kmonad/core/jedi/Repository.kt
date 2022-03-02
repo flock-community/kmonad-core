@@ -1,10 +1,10 @@
-package community.flock.kmonad.core.jedi.pipe
+package community.flock.kmonad.core.jedi
 
 import arrow.core.Either
 import community.flock.kmonad.core.AppException
 import community.flock.kmonad.core.common.IO
 import community.flock.kmonad.core.common.define.Dependency
-import community.flock.kmonad.core.jedi.data.Jedi
+import community.flock.kmonad.core.jedi.model.Jedi
 import kotlinx.coroutines.flow.Flow
 import java.util.UUID
 

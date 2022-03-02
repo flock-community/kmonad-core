@@ -1,4 +1,4 @@
-package community.flock.kmonad.core.sith.data
+package community.flock.kmonad.core.sith.model
 
 import community.flock.kmonad.core.common.define.Data
 import java.util.UUID

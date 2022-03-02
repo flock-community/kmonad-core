@@ -1,8 +1,8 @@
-package community.flock.kmonad.core.sith.pipe
+package community.flock.kmonad.core.sith
 
 import community.flock.kmonad.core.AppException.BadRequest
 import community.flock.kmonad.core.common.define.HasLogger
-import community.flock.kmonad.core.sith.data.Sith
+import community.flock.kmonad.core.sith.model.Sith
 import java.util.UUID
 
 

@@ -6,10 +6,10 @@ interface HasLogger {
 
 interface Logger : Dependency {
 
-    fun log(string: String)
+    fun log(string: String = "This is a log line")
 
-    fun error(string: String)
+    fun error(string: String = "This is an error")
 
-    fun warn(string: String)
+    fun warn(string: String = "This is a warning")
 
 }

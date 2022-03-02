@@ -2,8 +2,7 @@ package community.flock.kmonad.core.sith
 
 import community.flock.kmonad.core.AppException.Conflict
 import community.flock.kmonad.core.AppException.NotFound
-import community.flock.kmonad.core.sith.data.Sith
-import community.flock.kmonad.core.sith.pipe.Repository
+import community.flock.kmonad.core.sith.model.Sith
 import kotlinx.coroutines.flow.asFlow
 import java.util.UUID
 

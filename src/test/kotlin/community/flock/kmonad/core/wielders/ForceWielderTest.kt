@@ -3,21 +3,19 @@ package community.flock.kmonad.core.wielders
 import community.flock.kmonad.core.common.TestLogger
 import community.flock.kmonad.core.common.define.Logger
 import community.flock.kmonad.core.jedi.TestRepository.lukeUUID
-import community.flock.kmonad.core.wielders.data.ForceWielder
-import community.flock.kmonad.core.wielders.data.ForceWielder.Type.DARK
-import community.flock.kmonad.core.wielders.data.ForceWielder.Type.LIGHT
-import community.flock.kmonad.core.wielders.pipe.Context
-import community.flock.kmonad.core.wielders.pipe.bindGet
+import community.flock.kmonad.core.wielders.model.ForceWielder
+import community.flock.kmonad.core.wielders.model.ForceWielder.Type.DARK
+import community.flock.kmonad.core.wielders.model.ForceWielder.Type.LIGHT
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.take
 import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
+import community.flock.kmonad.core.jedi.Repository as JediRepository
 import community.flock.kmonad.core.jedi.TestRepository as TestJediRepository
-import community.flock.kmonad.core.jedi.pipe.Repository as JediRepository
+import community.flock.kmonad.core.sith.Repository as SithRepository
 import community.flock.kmonad.core.sith.TestRepository as TestSithRepository
-import community.flock.kmonad.core.sith.pipe.Repository as SithRepository
 
 @ExperimentalCoroutinesApi
 class ForceWielderTest {

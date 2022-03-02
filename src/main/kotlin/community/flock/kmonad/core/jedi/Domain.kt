@@ -1,8 +1,8 @@
-package community.flock.kmonad.core.jedi.pipe
+package community.flock.kmonad.core.jedi
 
 import community.flock.kmonad.core.common.Reader
 import community.flock.kmonad.core.common.define.HasLogger
-import community.flock.kmonad.core.jedi.data.Jedi
+import community.flock.kmonad.core.jedi.model.Jedi
 import java.util.UUID
 
 

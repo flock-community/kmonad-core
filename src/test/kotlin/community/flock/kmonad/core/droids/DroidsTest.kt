@@ -5,15 +5,8 @@ import arrow.core.computations.either
 import arrow.core.getOrHandle
 import community.flock.kmonad.core.AppException
 import community.flock.kmonad.core.AppException.BadRequest
-import community.flock.kmonad.core.common.TestLogger
 import community.flock.kmonad.core.common.assertLeft
-import community.flock.kmonad.core.common.define.Logger
-import community.flock.kmonad.core.droids.data.Droid
-import community.flock.kmonad.core.droids.pipe.Context
-import community.flock.kmonad.core.droids.pipe.Repository
-import community.flock.kmonad.core.droids.pipe.bindDelete
-import community.flock.kmonad.core.droids.pipe.bindGet
-import community.flock.kmonad.core.droids.pipe.bindPost
+import community.flock.kmonad.core.droids.model.Droid
 import kotlinx.coroutines.flow.take
 import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.runBlocking
@@ -23,7 +16,6 @@ import org.junit.jupiter.api.Test
 class DroidsTest {
 
     private val context = object : Context {
-        override val logger: Logger = TestLogger
         override val droidRepository: Repository = TestRepository
     }
 

@@ -7,12 +7,7 @@ import community.flock.kmonad.core.common.assertThrows
 import community.flock.kmonad.core.common.define.Logger
 import community.flock.kmonad.core.jedi.TestRepository.lukeUUID
 import community.flock.kmonad.core.jedi.TestRepository.yodaUUID
-import community.flock.kmonad.core.jedi.data.Jedi
-import community.flock.kmonad.core.jedi.pipe.Context
-import community.flock.kmonad.core.jedi.pipe.Repository
-import community.flock.kmonad.core.jedi.pipe.bindDelete
-import community.flock.kmonad.core.jedi.pipe.bindGet
-import community.flock.kmonad.core.jedi.pipe.bindPost
+import community.flock.kmonad.core.jedi.model.Jedi
 import kotlinx.coroutines.flow.take
 import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.runBlocking

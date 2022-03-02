@@ -1,22 +1,16 @@
 package community.flock.kmonad.core.sith
 
-import community.flock.kmonad.core.AppException.BadRequest
 import community.flock.kmonad.core.common.TestLogger
-import community.flock.kmonad.core.common.assertThrows
 import community.flock.kmonad.core.common.define.Logger
 import community.flock.kmonad.core.sith.TestRepository.sidiousUUID
 import community.flock.kmonad.core.sith.TestRepository.vaderUUID
-import community.flock.kmonad.core.sith.data.Sith
-import community.flock.kmonad.core.sith.pipe.Context
-import community.flock.kmonad.core.sith.pipe.Repository
-import community.flock.kmonad.core.sith.pipe.bindDelete
-import community.flock.kmonad.core.sith.pipe.bindGet
-import community.flock.kmonad.core.sith.pipe.bindPost
+import community.flock.kmonad.core.sith.model.Sith
 import kotlinx.coroutines.flow.take
 import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
+import java.util.UUID
 
 class SithTest {
 
@@ -38,7 +32,6 @@ class SithTest {
     @Test
     fun testBindGetByUUID() = runBlocking {
         context.bindGet(sidiousUUID).assertSidious()
-        assertThrows(BadRequest::class) { context.bindGet("Not a UUID") }
     }
 
     @Test
@@ -50,7 +43,6 @@ class SithTest {
     @Test
     fun testBindDelete() = runBlocking {
         context.bindDelete(sidiousUUID).assertSidious()
-        assertThrows(BadRequest::class) { context.bindDelete("Not a UUID") }
     }
 
 
