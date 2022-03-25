@@ -4,7 +4,7 @@ interface HasLogger {
     val logger: Logger
 }
 
-interface Logger : Dependency {
+interface Logger {
 
     fun log(string: String = "This is a log line")
 
