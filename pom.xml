@@ -12,8 +12,9 @@
     <description>Pragmatic Functional Programming in Kotlin</description>
 
     <properties>
-        <kotlin.version>1.6.10</kotlin.version>
-        <kotlin-coroutines.version>1.6.0</kotlin-coroutines.version>
+        <java.version>17</java.version>
+        <kotlin.version>1.6.21</kotlin.version>
+        <kotlin-coroutines.version>1.6.1</kotlin-coroutines.version>
         <arrow.version>1.0.1</arrow.version>
 
         <junit.version>5.8.2</junit.version>
@@ -70,6 +71,12 @@
                         </goals>
                     </execution>
                 </executions>
+                <configuration>
+                    <args>
+                        <arg>-Xjsr305=strict</arg>
+                        <arg>-Xcontext-receivers</arg>
+                    </args>
+                </configuration>
             </plugin>
             <plugin>
                 <artifactId>maven-surefire-plugin</artifactId>
