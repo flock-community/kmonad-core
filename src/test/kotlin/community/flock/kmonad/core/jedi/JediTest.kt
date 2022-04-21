@@ -16,15 +16,17 @@ import org.junit.jupiter.api.Test
 
 class JediTest {
 
-    private val context = object : Context {
-        override val logger: Logger = TestLogger
-        override val jediRepository: Repository = TestRepository
+    private val context = object {
+        operator fun invoke() = object : Context {
+            override val logger: Logger = TestLogger
+            override val jediRepository: Repository = TestRepository
+        }
     }
 
     @Test
     fun testBindGet(): Unit = runBlocking {
         bindGet()
-            .provide(context)
+            .provide(context())
             .runUnsafe()
             .map { it.take(2).toList() }
             .map { (luke, yoda) ->
@@ -36,13 +38,13 @@ class JediTest {
     @Test
     fun testBindGetByUUID(): Unit = runBlocking {
         bindGet(lukeUUID)
-            .provide(context)
+            .provide(context())
             .runUnsafe()
             .map { it.assertLuke() }
 
         assertThrows(BadRequest::class) {
             bindGet("Not a UUID")
-                .provide(context)
+                .provide(context())
                 .runUnsafe()
                 .getOrHandle { throw it }
         }
@@ -52,7 +54,7 @@ class JediTest {
     fun testBindPost(): Unit = runBlocking {
         val testJedi = Jedi(name = "TestJediName", age = 42)
         bindPost(testJedi)
-            .provide(context)
+            .provide(context())
             .runUnsafe()
             .map { it.assertEquals(testJedi) }
 
@@ -61,13 +63,13 @@ class JediTest {
     @Test
     fun testBindDelete(): Unit = runBlocking {
         bindDelete(lukeUUID)
-            .provide(context)
+            .provide(context())
             .runUnsafe()
             .map { it.assertLuke() }
 
         assertThrows(BadRequest::class) {
             bindDelete("Not a UUID")
-                .provide(context)
+                .provide(context())
                 .runUnsafe()
                 .getOrHandle { throw it }
         }

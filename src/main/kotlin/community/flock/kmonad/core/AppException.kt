@@ -2,8 +2,8 @@ package community.flock.kmonad.core
 
 import arrow.core.Either
 import arrow.core.left
-import community.flock.kmonad.core.common.IO
-import community.flock.kmonad.core.common.Reader.Factory.just
+import community.flock.kmonad.core.common.monads.IO
+import community.flock.kmonad.core.common.monads.Reader.Factory.just
 import java.util.UUID
 
 sealed class AppException(message: String, cause: Throwable? = null) : RuntimeException(message, cause) {

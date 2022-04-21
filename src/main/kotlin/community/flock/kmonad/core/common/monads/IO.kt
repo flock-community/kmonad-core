@@ -1,4 +1,4 @@
-package community.flock.kmonad.core.common
+package community.flock.kmonad.core.common.monads
 
 class IO<out A>(val runUnsafe: () -> A) {
 

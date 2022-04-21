@@ -5,7 +5,9 @@ import arrow.core.computations.either
 import arrow.core.getOrHandle
 import community.flock.kmonad.core.AppException
 import community.flock.kmonad.core.AppException.BadRequest
+import community.flock.kmonad.core.common.TestLogger
 import community.flock.kmonad.core.common.assertLeft
+import community.flock.kmonad.core.common.define.Logger
 import community.flock.kmonad.core.droids.model.Droid
 import kotlinx.coroutines.flow.take
 import kotlinx.coroutines.flow.toList
@@ -15,13 +17,16 @@ import org.junit.jupiter.api.Test
 
 class DroidsTest {
 
-    private val context = object : Context {
-        override val droidRepository: Repository = TestRepository
+    private val context = object {
+        operator fun invoke() = object : Context {
+            override val droidRepository: Repository = TestRepository
+            override val logger: Logger = TestLogger
+        }
     }
 
     @Test
     fun testBindGet() = runTest {
-        val list = context.bindGet().bind().take(2).toList()
+        val list = context().bindGet().bind().take(2).toList()
         list.let { (c3po, r2d2) ->
             c3po.assertC3PO()
             r2d2.assertR2D2()
@@ -30,23 +35,27 @@ class DroidsTest {
 
     @Test
     fun testBindGetByUUID() = runTest {
-        assertLeft(BadRequest::class) { context.bindGet("Not a UUID") }
-        val droid = context.bindGet(TestRepository.c3poUUID).bind()
-        droid.assertC3PO()
+        with(context()) {
+            assertLeft(BadRequest::class) { bindGet("Not a UUID") }
+            val droid = bindGet(TestRepository.c3poUUID).bind()
+            droid.assertC3PO()
+        }
     }
 
     @Test
     fun testBindPost() = runTest {
         val testDroid = Droid(designation = "TestDroidDesignation", type = Droid.Type.Protocol)
-        val droid = context.bindPost(testDroid).bind()
+        val droid = context().bindPost(testDroid).bind()
         droid.assertEquals(testDroid)
     }
 
     @Test
     fun testBindDelete() = runTest {
-        assertLeft(BadRequest::class) { context.bindDelete("Not a UUID") }
-        val droid = context.bindDelete(TestRepository.c3poUUID).bind()
-        droid.assertC3PO()
+        with(context()) {
+            assertLeft(BadRequest::class) { bindDelete("Not a UUID") }
+            val droid = bindDelete(TestRepository.c3poUUID).bind()
+            droid.assertC3PO()
+        }
     }
 
 

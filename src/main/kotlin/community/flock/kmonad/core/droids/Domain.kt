@@ -2,6 +2,8 @@ package community.flock.kmonad.core.droids
 
 import arrow.core.computations.either
 import community.flock.kmonad.core.AppException
+import community.flock.kmonad.core.common.define.HasLogger
+import community.flock.kmonad.core.common.define.log
 import community.flock.kmonad.core.droids.model.Droid
 import kotlinx.coroutines.flow.Flow
 import java.util.UUID
@@ -22,7 +24,9 @@ suspend fun save(droid: Droid) = either<AppException, Droid> {
     droidRepository.save(droid).bind()
 }
 
-context(HasDroidRepository)
+context(HasDroidRepository, HasLogger)
 suspend fun deleteByUUID(uuid: UUID) = either<AppException, Droid> {
-    droidRepository.deleteByUUID(uuid).bind()
+    val droid = droidRepository.deleteByUUID(uuid).bind()
+    droid.id.log()
+    droid
 }

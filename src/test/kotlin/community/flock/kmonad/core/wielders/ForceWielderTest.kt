@@ -20,15 +20,17 @@ import community.flock.kmonad.core.sith.TestRepository as TestSithRepository
 @ExperimentalCoroutinesApi
 class ForceWielderTest {
 
-    private val context = object : Context {
-        override val logger: Logger = TestLogger
-        override val jediRepository: JediRepository = TestJediRepository
-        override val sithRepository: SithRepository = TestSithRepository
+    private val context = object {
+        operator fun invoke() = object : Context {
+            override val logger: Logger = TestLogger
+            override val jediRepository: JediRepository = TestJediRepository
+            override val sithRepository: SithRepository = TestSithRepository
+        }
     }
 
     @Test
     fun testBindGet() = runBlocking {
-        context.bindGet()
+        context().bindGet()
             .take(4).toList()
             .let { (jedi1, jedi2, sith1, sith2) ->
                 jedi1.assertLight()
@@ -40,7 +42,7 @@ class ForceWielderTest {
 
     @Test
     fun testBindGetByUUID(): Unit = runBlocking {
-        context.bindGet(lukeUUID)
+        context().bindGet(lukeUUID)
             .assertLight()
     }
 

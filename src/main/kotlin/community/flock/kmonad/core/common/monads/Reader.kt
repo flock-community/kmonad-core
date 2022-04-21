@@ -1,4 +1,4 @@
-package community.flock.kmonad.core.common
+package community.flock.kmonad.core.common.monads
 
 class Reader<R, out A>(val provide: (R) -> A) {
 

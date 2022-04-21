@@ -6,7 +6,7 @@ import arrow.core.right
 import community.flock.kmonad.core.AppException
 import community.flock.kmonad.core.AppException.Conflict
 import community.flock.kmonad.core.AppException.NotFound
-import community.flock.kmonad.core.common.IO
+import community.flock.kmonad.core.common.monads.IO
 import community.flock.kmonad.core.jedi.model.Jedi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.asFlow

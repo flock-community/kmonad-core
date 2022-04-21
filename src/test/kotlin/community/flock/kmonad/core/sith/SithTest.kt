@@ -10,18 +10,19 @@ import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
-import java.util.UUID
 
 class SithTest {
 
-    private val context = object : Context {
-        override val logger: Logger = TestLogger
-        override val sithRepository: Repository = TestRepository
+    private val context = object {
+        operator fun invoke() = object : Context {
+            override val logger: Logger = TestLogger
+            override val sithRepository: Repository = TestRepository
+        }
     }
 
     @Test
     fun testBindGet() = runBlocking {
-        context.bindGet()
+        context().bindGet()
             .take(2).toList()
             .let { (sidious, vader) ->
                 sidious.assertSidious()
@@ -31,18 +32,18 @@ class SithTest {
 
     @Test
     fun testBindGetByUUID() = runBlocking {
-        context.bindGet(sidiousUUID).assertSidious()
+        context().bindGet(sidiousUUID).assertSidious()
     }
 
     @Test
     fun testBindPost(): Unit = runBlocking {
         val testSith = Sith(name = "TestSithName", age = 42)
-        context.bindPost(testSith).assertEquals(testSith)
+        context().bindPost(testSith).assertEquals(testSith)
     }
 
     @Test
     fun testBindDelete() = runBlocking {
-        context.bindDelete(sidiousUUID).assertSidious()
+        context().bindDelete(sidiousUUID).assertSidious()
     }
 
 
