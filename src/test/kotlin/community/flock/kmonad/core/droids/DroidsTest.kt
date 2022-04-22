@@ -1,7 +1,7 @@
 package community.flock.kmonad.core.droids
 
-import arrow.core.computations.EitherEffect
-import arrow.core.computations.either
+import arrow.core.continuations.EffectScope
+import arrow.core.continuations.effect
 import arrow.core.getOrHandle
 import community.flock.kmonad.core.AppException
 import community.flock.kmonad.core.AppException.BadRequest
@@ -58,9 +58,9 @@ class DroidsTest {
         }
     }
 
-
-    private fun runTest(block: suspend EitherEffect<AppException, *>.() -> Unit): Unit =
-        runBlocking { either<AppException, Unit> { block() } }.getOrHandle { throw it }
+    private fun runTest(block: suspend EffectScope<AppException>.() -> Unit): Unit = runBlocking {
+        effect<AppException, Unit> { block() }.toEither().getOrHandle { throw it }
+    }
 
     private fun Droid.assertC3PO() {
         Assertions.assertEquals(TestRepository.c3poUUID, id)

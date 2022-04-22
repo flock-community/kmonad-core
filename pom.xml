@@ -15,7 +15,7 @@
         <java.version>17</java.version>
         <kotlin.version>1.6.21</kotlin.version>
         <kotlin-coroutines.version>1.6.1</kotlin-coroutines.version>
-        <arrow.version>1.0.1</arrow.version>
+        <arrow.version>1.1.2</arrow.version>
 
         <junit.version>5.8.2</junit.version>
 

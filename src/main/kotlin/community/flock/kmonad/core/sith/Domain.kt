@@ -8,7 +8,8 @@ context(HasSithRepository, HasLogger)
 suspend fun getAll() = sithRepository.getAll()
     .also { logger.log(it.toString()) }
 
-suspend fun HasSithRepository.getByUUID(uuid: UUID) = sithRepository.getByUUID(uuid)
+context(HasSithRepository)
+suspend fun getByUUID(uuid: UUID) = sithRepository.getByUUID(uuid)
 
 suspend fun HasSithRepository.save(sith: Sith) = sithRepository.save(sith)
 

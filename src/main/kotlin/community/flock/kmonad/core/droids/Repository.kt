@@ -1,6 +1,6 @@
 package community.flock.kmonad.core.droids
 
-import arrow.core.Either
+import arrow.core.continuations.EffectScope
 import community.flock.kmonad.core.AppException
 import community.flock.kmonad.core.droids.model.Droid
 import kotlinx.coroutines.flow.Flow
@@ -12,12 +12,16 @@ interface HasDroidRepository {
 
 interface Repository {
 
-    suspend fun getAll(): Either<AppException, Flow<Droid>>
+    context(EffectScope<AppException>)
+    suspend fun getAll(): Flow<Droid>
 
-    suspend fun getByUUID(uuid: UUID): Either<AppException, Droid>
+    context(EffectScope<AppException>)
+    suspend fun getByUUID(uuid: UUID): Droid
 
-    suspend fun save(droid: Droid): Either<AppException, Droid>
+    context(EffectScope<AppException>)
+    suspend fun save(droid: Droid): Droid
 
-    suspend fun deleteByUUID(uuid: UUID): Either<AppException, Droid>
+    context(EffectScope<AppException>)
+    suspend fun deleteByUUID(uuid: UUID): Droid
 
 }

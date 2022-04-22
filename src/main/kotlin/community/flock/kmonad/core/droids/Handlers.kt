@@ -1,6 +1,6 @@
 package community.flock.kmonad.core.droids
 
-import arrow.core.computations.either
+import arrow.core.continuations.effect
 import arrow.core.left
 import arrow.core.right
 import community.flock.kmonad.core.AppException
@@ -14,22 +14,22 @@ import java.util.UUID
 interface Context : HasDroidRepository, HasLogger
 
 
-suspend fun Context.bindGet() = either<AppException, Flow<Droid>> {
-    getAll().bind()
+suspend fun Context.bindGet() = effect<AppException, Flow<Droid>> {
+    getAll()
 }
 
-suspend fun Context.bindGet(uuidString: String?) = either<AppException, Droid> {
+suspend fun Context.bindGet(uuidString: String?) = effect<AppException, Droid> {
     val uuid = validate { UUID.fromString(uuidString) }.bind()
-    getByUUID(uuid).bind()
+    getByUUID(uuid)
 }
 
-suspend fun Context.bindPost(droid: Droid) = either<AppException, Droid> {
-    save(droid).bind()
+suspend fun Context.bindPost(droid: Droid) = effect<AppException, Droid> {
+    save(droid)
 }
 
-suspend fun Context.bindDelete(uuidString: String?) = either<AppException, Droid> {
+suspend fun Context.bindDelete(uuidString: String?) = effect<AppException, Droid> {
     val uuid = validate { UUID.fromString(uuidString) }.bind()
-    deleteByUUID(uuid).bind()
+    deleteByUUID(uuid)
 }
 
 

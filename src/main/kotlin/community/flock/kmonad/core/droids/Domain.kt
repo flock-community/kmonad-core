@@ -1,32 +1,25 @@
 package community.flock.kmonad.core.droids
 
-import arrow.core.computations.either
+import arrow.core.continuations.EffectScope
 import community.flock.kmonad.core.AppException
 import community.flock.kmonad.core.common.define.HasLogger
 import community.flock.kmonad.core.common.define.log
 import community.flock.kmonad.core.droids.model.Droid
-import kotlinx.coroutines.flow.Flow
 import java.util.UUID
 
 
-context(HasDroidRepository)
-suspend fun getAll() = either<AppException, Flow<Droid>> {
-    droidRepository.getAll().bind()
-}
+context(EffectScope<AppException>, HasDroidRepository)
+suspend fun getAll() = droidRepository.getAll()
 
-context(HasDroidRepository)
-suspend fun getByUUID(uuid: UUID) = either<AppException, Droid> {
-    droidRepository.getByUUID(uuid).bind()
-}
+context(EffectScope<AppException>, HasDroidRepository)
+suspend fun getByUUID(uuid: UUID) = droidRepository.getByUUID(uuid)
 
-context(HasDroidRepository)
-suspend fun save(droid: Droid) = either<AppException, Droid> {
-    droidRepository.save(droid).bind()
-}
+context(EffectScope<AppException>, HasDroidRepository)
+suspend fun save(droid: Droid) = droidRepository.save(droid)
 
-context(HasDroidRepository, HasLogger)
-suspend fun deleteByUUID(uuid: UUID) = either<AppException, Droid> {
-    val droid = droidRepository.deleteByUUID(uuid).bind()
+context(EffectScope<AppException>, HasDroidRepository, HasLogger)
+suspend fun deleteByUUID(uuid: UUID): Droid {
+    val droid = droidRepository.deleteByUUID(uuid)
     droid.id.log()
-    droid
+    return droid
 }
