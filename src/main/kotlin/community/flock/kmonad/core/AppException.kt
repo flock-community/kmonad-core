@@ -1,7 +1,7 @@
 package community.flock.kmonad.core
 
-import arrow.core.Either
-import arrow.core.left
+import community.flock.kmonad.core.common.monads.Either
+import community.flock.kmonad.core.common.monads.Either.Companion.left
 import community.flock.kmonad.core.common.monads.IO
 import community.flock.kmonad.core.common.monads.Reader.Factory.just
 import java.util.UUID

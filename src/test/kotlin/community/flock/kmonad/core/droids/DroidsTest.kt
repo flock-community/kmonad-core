@@ -8,6 +8,7 @@ import community.flock.kmonad.core.AppException.BadRequest
 import community.flock.kmonad.core.common.TestLogger
 import community.flock.kmonad.core.common.assertLeft
 import community.flock.kmonad.core.common.Logger
+import community.flock.kmonad.core.common.assertLeftEffect
 import community.flock.kmonad.core.droids.model.Droid
 import kotlinx.coroutines.flow.take
 import kotlinx.coroutines.flow.toList
@@ -36,7 +37,7 @@ class DroidsTest {
     @Test
     fun testBindGetByUUID() = runTest {
         with(context()) {
-            assertLeft(BadRequest::class) { bindGet("Not a UUID") }
+            assertLeftEffect(BadRequest::class) { bindGet("Not a UUID") }
             val droid = bindGet(TestRepository.c3poUUID).bind()
             droid.assertC3PO()
         }
@@ -52,7 +53,7 @@ class DroidsTest {
     @Test
     fun testBindDelete() = runTest {
         with(context()) {
-            assertLeft(BadRequest::class) { bindDelete("Not a UUID") }
+            assertLeftEffect(BadRequest::class) { bindDelete("Not a UUID") }
             val droid = bindDelete(TestRepository.c3poUUID).bind()
             droid.assertC3PO()
         }

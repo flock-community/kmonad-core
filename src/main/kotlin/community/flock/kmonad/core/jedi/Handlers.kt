@@ -1,9 +1,9 @@
 package community.flock.kmonad.core.jedi
 
-import arrow.core.left
-import arrow.core.right
 import community.flock.kmonad.core.AppException.BadRequest
 import community.flock.kmonad.core.common.HasLogger
+import community.flock.kmonad.core.common.monads.Either.Companion.left
+import community.flock.kmonad.core.common.monads.Either.Companion.right
 import community.flock.kmonad.core.jedi.model.Jedi
 import community.flock.kmonad.core.toReader
 import java.util.UUID
@@ -23,7 +23,7 @@ fun bindDelete(uuidString: String?) = validate { UUID.fromString(uuidString) }
     .fold({ it.toReader() }, { deleteByUUID<Context>(it) })
 
 
-private fun <A> validate(block: () -> A) = try {
+private fun <A : Any> validate(block: () -> A) = try {
     block().right()
 } catch (e: Exception) {
     BadRequest().left()

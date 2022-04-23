@@ -1,7 +1,7 @@
 package community.flock.kmonad.core.jedi
 
-import arrow.core.Either
 import community.flock.kmonad.core.AppException
+import community.flock.kmonad.core.common.monads.Either
 import community.flock.kmonad.core.common.monads.IO
 import community.flock.kmonad.core.jedi.model.Jedi
 import kotlinx.coroutines.flow.Flow

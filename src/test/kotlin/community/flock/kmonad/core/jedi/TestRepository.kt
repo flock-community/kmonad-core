@@ -1,11 +1,11 @@
 package community.flock.kmonad.core.jedi
 
-import arrow.core.Either
-import arrow.core.left
-import arrow.core.right
 import community.flock.kmonad.core.AppException
 import community.flock.kmonad.core.AppException.Conflict
 import community.flock.kmonad.core.AppException.NotFound
+import community.flock.kmonad.core.common.monads.Either
+import community.flock.kmonad.core.common.monads.Either.Companion.left
+import community.flock.kmonad.core.common.monads.Either.Companion.right
 import community.flock.kmonad.core.common.monads.IO
 import community.flock.kmonad.core.jedi.model.Jedi
 import kotlinx.coroutines.flow.Flow
