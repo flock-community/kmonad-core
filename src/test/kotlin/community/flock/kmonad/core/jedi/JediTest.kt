@@ -1,10 +1,9 @@
 package community.flock.kmonad.core.jedi
 
-import arrow.core.getOrHandle
 import community.flock.kmonad.core.AppException.BadRequest
+import community.flock.kmonad.core.common.Logger
 import community.flock.kmonad.core.common.TestLogger
 import community.flock.kmonad.core.common.assertThrows
-import community.flock.kmonad.core.common.Logger
 import community.flock.kmonad.core.common.monads.getOrHandle
 import community.flock.kmonad.core.jedi.TestRepository.lukeUUID
 import community.flock.kmonad.core.jedi.TestRepository.yodaUUID

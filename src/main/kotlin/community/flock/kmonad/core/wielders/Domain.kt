@@ -3,6 +3,9 @@ package community.flock.kmonad.core.wielders
 import community.flock.kmonad.core.AppException.InternalServerError
 import community.flock.kmonad.core.AppException.NotFound
 import community.flock.kmonad.core.common.HasLogger
+import community.flock.kmonad.core.common.monads.Either.Companion.left
+import community.flock.kmonad.core.common.monads.Either.Companion.right
+import community.flock.kmonad.core.common.monads.flatMap
 import community.flock.kmonad.core.common.monads.getOrHandle
 import community.flock.kmonad.core.common.monads.orNull
 import community.flock.kmonad.core.jedi.HasJediRepository
@@ -36,10 +39,11 @@ suspend fun Domain.getByUUID(uuid: UUID): ForceWielder {
     val jedi = getJediByUUID<Domain>(uuid)
         .provide(this)
         .runUnsafe()
-        .map { it.toForceWielder() }
+        .map { maybeJedi -> maybeJedi.map { it.toForceWielder() } }
+        .flatMap { option -> option.fold({ NotFound(uuid).left() }, { it.right() }) }
         .orNull()
     val sith = runCatching { getSithByUUID(uuid) }
-        .map { it.toForceWielder() }
+        .map { it?.toForceWielder() }
         .getOrNull()
     val forceWielder = with(jedi to sith) {
         when {

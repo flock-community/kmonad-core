@@ -12,7 +12,7 @@ interface Repository {
 
     suspend fun getAll(): Flow<Sith>
 
-    suspend fun getByUUID(uuid: UUID): Sith
+    suspend fun getByUUID(uuid: UUID): Sith?
 
     suspend fun save(sith: Sith): Sith
 

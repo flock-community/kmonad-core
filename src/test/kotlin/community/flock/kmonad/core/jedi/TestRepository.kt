@@ -7,6 +7,9 @@ import community.flock.kmonad.core.common.monads.Either
 import community.flock.kmonad.core.common.monads.Either.Companion.left
 import community.flock.kmonad.core.common.monads.Either.Companion.right
 import community.flock.kmonad.core.common.monads.IO
+import community.flock.kmonad.core.common.monads.Option
+import community.flock.kmonad.core.common.monads.flatMap
+import community.flock.kmonad.core.common.monads.toOption
 import community.flock.kmonad.core.jedi.model.Jedi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.asFlow
@@ -25,8 +28,8 @@ object TestRepository : Repository {
     override fun getAll(): IO<Either<AppException, Flow<Jedi>>> =
         IO { allJedi.map { it.value }.asFlow().right() }
 
-    override fun getByUUID(uuid: UUID): IO<Either<AppException, Jedi>> = IO {
-        allJedi[uuid.toString()]?.right() ?: NotFound(uuid).left()
+    override fun getByUUID(uuid: UUID): IO<Either<AppException, Option<Jedi>>> = IO {
+        allJedi[uuid.toString()].toOption().right()
     }
 
     override fun save(jedi: Jedi): IO<Either<AppException, Jedi>> = IO {
@@ -35,5 +38,6 @@ object TestRepository : Repository {
     }
 
     override fun deleteByUUID(uuid: UUID) = getByUUID(uuid)
+        .map { either -> either.flatMap { option -> option.fold({ NotFound(uuid).left() }, { it.right() }) } }
 
 }

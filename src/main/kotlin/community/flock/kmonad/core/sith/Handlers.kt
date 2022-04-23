@@ -1,6 +1,7 @@
 package community.flock.kmonad.core.sith
 
 import community.flock.kmonad.core.AppException.BadRequest
+import community.flock.kmonad.core.AppException.NotFound
 import community.flock.kmonad.core.common.HasLogger
 import community.flock.kmonad.core.sith.model.Sith
 import java.util.UUID
@@ -11,7 +12,8 @@ interface Context : HasSithRepository, HasLogger
 
 suspend fun Context.bindGet() = getAll()
 
-suspend fun Context.bindGet(uuidString: String?) = getByUUID(validate { UUID.fromString(uuidString) })
+suspend fun Context.bindGet(uuidString: String?) = validate { UUID.fromString(uuidString) }
+    .let { getByUUID(it) ?: throw NotFound(it) }
 
 suspend fun Context.bindPost(sith: Sith) = save(sith)
 

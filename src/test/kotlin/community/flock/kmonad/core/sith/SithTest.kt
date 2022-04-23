@@ -32,7 +32,7 @@ class SithTest {
 
     @Test
     fun testBindGetByUUID() = runBlocking {
-        context().bindGet(sidiousUUID).assertSidious()
+        context().bindGet(sidiousUUID)?.assertSidious()
     }
 
     @Test
