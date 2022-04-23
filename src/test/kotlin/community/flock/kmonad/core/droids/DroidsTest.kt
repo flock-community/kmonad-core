@@ -7,7 +7,7 @@ import community.flock.kmonad.core.AppException
 import community.flock.kmonad.core.AppException.BadRequest
 import community.flock.kmonad.core.common.TestLogger
 import community.flock.kmonad.core.common.assertLeft
-import community.flock.kmonad.core.common.define.Logger
+import community.flock.kmonad.core.common.Logger
 import community.flock.kmonad.core.droids.model.Droid
 import kotlinx.coroutines.flow.take
 import kotlinx.coroutines.flow.toList

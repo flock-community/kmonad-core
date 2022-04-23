@@ -1,7 +1,7 @@
 package community.flock.kmonad.core.jedi
 
 import community.flock.kmonad.core.common.monads.Reader
-import community.flock.kmonad.core.common.define.HasLogger
+import community.flock.kmonad.core.common.HasLogger
 import community.flock.kmonad.core.jedi.model.Jedi
 import java.util.UUID
 

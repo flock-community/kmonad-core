@@ -1,4 +1,4 @@
-package community.flock.kmonad.core.common.define
+package community.flock.kmonad.core.common
 
 interface HasLogger {
     val logger: Logger

@@ -1,6 +1,6 @@
 package community.flock.kmonad.core.sith
 
-import community.flock.kmonad.core.common.define.HasLogger
+import community.flock.kmonad.core.common.HasLogger
 import community.flock.kmonad.core.sith.model.Sith
 import java.util.UUID
 

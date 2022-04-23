@@ -1,6 +1,5 @@
 package community.flock.kmonad.core.common
 
-import community.flock.kmonad.core.common.define.Logger
 import org.junit.jupiter.api.Assertions
 
 object TestLogger : Logger {

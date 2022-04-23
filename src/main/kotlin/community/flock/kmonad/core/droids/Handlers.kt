@@ -5,7 +5,7 @@ import arrow.core.left
 import arrow.core.right
 import community.flock.kmonad.core.AppException
 import community.flock.kmonad.core.AppException.BadRequest
-import community.flock.kmonad.core.common.define.HasLogger
+import community.flock.kmonad.core.common.HasLogger
 import community.flock.kmonad.core.droids.model.Droid
 import kotlinx.coroutines.flow.Flow
 import java.util.UUID

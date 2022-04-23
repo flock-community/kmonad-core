@@ -2,8 +2,8 @@ package community.flock.kmonad.core.droids
 
 import arrow.core.continuations.EffectScope
 import community.flock.kmonad.core.AppException
-import community.flock.kmonad.core.common.define.HasLogger
-import community.flock.kmonad.core.common.define.log
+import community.flock.kmonad.core.common.HasLogger
+import community.flock.kmonad.core.common.log
 import community.flock.kmonad.core.droids.model.Droid
 import java.util.UUID
 

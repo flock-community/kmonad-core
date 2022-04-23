@@ -1,4 +1,4 @@
-package community.flock.kmonad.core.common
+package community.flock.kmonad.core.common.typeclasses
 
 @Suppress("unused")
 interface Producible<T, R> {

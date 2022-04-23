@@ -3,7 +3,7 @@ package community.flock.kmonad.core.jedi
 import arrow.core.left
 import arrow.core.right
 import community.flock.kmonad.core.AppException.BadRequest
-import community.flock.kmonad.core.common.define.HasLogger
+import community.flock.kmonad.core.common.HasLogger
 import community.flock.kmonad.core.jedi.model.Jedi
 import community.flock.kmonad.core.toReader
 import java.util.UUID

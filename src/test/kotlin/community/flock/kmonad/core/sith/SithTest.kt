@@ -1,7 +1,7 @@
 package community.flock.kmonad.core.sith
 
 import community.flock.kmonad.core.common.TestLogger
-import community.flock.kmonad.core.common.define.Logger
+import community.flock.kmonad.core.common.Logger
 import community.flock.kmonad.core.sith.TestRepository.sidiousUUID
 import community.flock.kmonad.core.sith.TestRepository.vaderUUID
 import community.flock.kmonad.core.sith.model.Sith

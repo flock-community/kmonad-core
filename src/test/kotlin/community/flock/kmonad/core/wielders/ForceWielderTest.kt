@@ -1,7 +1,7 @@
 package community.flock.kmonad.core.wielders
 
 import community.flock.kmonad.core.common.TestLogger
-import community.flock.kmonad.core.common.define.Logger
+import community.flock.kmonad.core.common.Logger
 import community.flock.kmonad.core.jedi.TestRepository.lukeUUID
 import community.flock.kmonad.core.wielders.model.ForceWielder
 import community.flock.kmonad.core.wielders.model.ForceWielder.Type.DARK

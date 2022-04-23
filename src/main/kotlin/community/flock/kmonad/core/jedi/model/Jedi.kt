@@ -1,6 +1,6 @@
 package community.flock.kmonad.core.jedi.model
 
-import community.flock.kmonad.core.common.define.Data
+import community.flock.kmonad.core.common.Data
 import java.util.UUID
 
 data class Jedi(

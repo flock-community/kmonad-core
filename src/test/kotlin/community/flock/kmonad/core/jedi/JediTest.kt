@@ -4,7 +4,7 @@ import arrow.core.getOrHandle
 import community.flock.kmonad.core.AppException.BadRequest
 import community.flock.kmonad.core.common.TestLogger
 import community.flock.kmonad.core.common.assertThrows
-import community.flock.kmonad.core.common.define.Logger
+import community.flock.kmonad.core.common.Logger
 import community.flock.kmonad.core.jedi.TestRepository.lukeUUID
 import community.flock.kmonad.core.jedi.TestRepository.yodaUUID
 import community.flock.kmonad.core.jedi.model.Jedi
