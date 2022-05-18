@@ -1,6 +1,5 @@
 package community.flock.kmonad.core.sith
 
-import arrow.core.flatMap
 import community.flock.kmonad.core.AppException.BadRequest
 import community.flock.kmonad.core.AppException.NotFound
 import community.flock.kmonad.core.common.HasLogger
@@ -13,13 +12,17 @@ interface SithContext : HasSithRepository, HasLogger
 
 suspend fun SithContext.bindGet(): Result<List<Sith>> = getAllSith()
 
-suspend fun SithContext.bindGet(uuidString: String?): Result<Sith> = validate { UUID.fromString(uuidString) }
-    .let { getSithByUUID(it).flatMap { sith -> runCatching { sith ?: throw NotFound(it) } } }
+suspend fun SithContext.bindGet(uuidString: String?): Result<Sith> = runCatching {
+    val uuid = validate { UUID.fromString(uuidString) }
+    getSithByUUID(uuid).getOrThrow() ?: throw NotFound(uuid)
+}
 
 suspend fun SithContext.bindPost(sith: Sith): Result<Sith> = saveSith(sith)
 
-suspend fun SithContext.bindDelete(uuidString: String?): Result<Sith> =
-    deleteSithByUUID(validate { UUID.fromString(uuidString) })
+suspend fun SithContext.bindDelete(uuidString: String?): Result<Sith> = runCatching {
+    val uuid = validate { UUID.fromString(uuidString) }
+    deleteSithByUUID(uuid).getOrThrow()
+}
 
 
 private fun <A> validate(block: () -> A) = try {
