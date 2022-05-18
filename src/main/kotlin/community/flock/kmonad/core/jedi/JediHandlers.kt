@@ -12,15 +12,15 @@ import community.flock.kmonad.core.jedi.model.Jedi
 import java.util.UUID
 
 
-interface Context : HasJediRepository, HasLogger
+interface JediContext : HasJediRepository, HasLogger
 
 
-fun bindGet() = getAll<Context>()
+fun bindGet() = getAllJedi<JediContext>()
 
 fun bindGet(uuidString: String?) = validate { UUID.fromString(uuidString) }
     .let { eitherUuid ->
         eitherUuid
-            .fold({ just(IO { it.left() }) }, { getByUUID<Context>(it) })
+            .fold({ just(IO { it.left() }) }, { getJediByUUID<JediContext>(it) })
             .map { io ->
                 io.map { either ->
                     either.flatMap { option ->
@@ -32,10 +32,10 @@ fun bindGet(uuidString: String?) = validate { UUID.fromString(uuidString) }
             }
     }
 
-fun bindPost(jedi: Jedi) = save<Context>(jedi)
+fun bindPost(jedi: Jedi) = saveJedi<JediContext>(jedi)
 
 fun bindDelete(uuidString: String?) = validate { UUID.fromString(uuidString) }
-    .fold({ just(IO { it.left() }) }, { deleteByUUID<Context>(it) })
+    .fold({ just(IO { it.left() }) }, { deleteJediByUUID<JediContext>(it) })
 
 
 private fun <A : Any> validate(block: () -> A) = try {

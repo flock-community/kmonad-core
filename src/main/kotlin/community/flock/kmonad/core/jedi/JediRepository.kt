@@ -5,16 +5,15 @@ import community.flock.kmonad.core.common.monads.Either
 import community.flock.kmonad.core.common.monads.IO
 import community.flock.kmonad.core.common.monads.Option
 import community.flock.kmonad.core.jedi.model.Jedi
-import kotlinx.coroutines.flow.Flow
 import java.util.UUID
 
 interface HasJediRepository {
-    val jediRepository: Repository
+    val jediRepository: JediRepository
 }
 
-interface Repository {
+interface JediRepository {
 
-    fun getAll(): IO<Either<AppException, Flow<Jedi>>>
+    fun getAll(): IO<Either<AppException, List<Jedi>>>
 
     fun getByUUID(uuid: UUID): IO<Either<AppException, Option<Jedi>>>
 

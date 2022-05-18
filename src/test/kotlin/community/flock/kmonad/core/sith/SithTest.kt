@@ -1,28 +1,26 @@
 package community.flock.kmonad.core.sith
 
-import community.flock.kmonad.core.common.TestLogger
 import community.flock.kmonad.core.common.Logger
-import community.flock.kmonad.core.sith.TestRepository.sidiousUUID
-import community.flock.kmonad.core.sith.TestRepository.vaderUUID
+import community.flock.kmonad.core.common.TestLogger
+import community.flock.kmonad.core.sith.TestSithRepository.Companion.sidiousUUID
+import community.flock.kmonad.core.sith.TestSithRepository.Companion.vaderUUID
 import community.flock.kmonad.core.sith.model.Sith
-import kotlinx.coroutines.flow.take
-import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 
 class SithTest {
 
-    private val context = object {
-        operator fun invoke() = object : Context {
+    private val sithContext = object {
+        operator fun invoke() = object : SithContext {
             override val logger: Logger = TestLogger
-            override val sithRepository: Repository = TestRepository
+            override val sithRepository: SithRepository = TestSithRepository()
         }
     }
 
     @Test
     fun testBindGet() = runBlocking {
-        context().bindGet()
+        sithContext().bindGet().getOrThrow()
             .take(2).toList()
             .let { (sidious, vader) ->
                 sidious.assertSidious()
@@ -31,19 +29,19 @@ class SithTest {
     }
 
     @Test
-    fun testBindGetByUUID() = runBlocking {
-        context().bindGet(sidiousUUID)?.assertSidious()
+    fun testBindGetByUUID(): Unit = runBlocking {
+        sithContext().bindGet(sidiousUUID).getOrThrow().assertSidious()
     }
 
     @Test
     fun testBindPost(): Unit = runBlocking {
         val testSith = Sith(name = "TestSithName", age = 42)
-        context().bindPost(testSith).assertEquals(testSith)
+        sithContext().bindPost(testSith).getOrThrow().assertEquals(testSith)
     }
 
     @Test
     fun testBindDelete() = runBlocking {
-        context().bindDelete(sidiousUUID).assertSidious()
+        sithContext().bindDelete(sidiousUUID).getOrThrow().assertSidious()
     }
 
 

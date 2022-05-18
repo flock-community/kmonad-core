@@ -1,4 +1,4 @@
-package community.flock.kmonad.core.droids.model
+package community.flock.kmonad.core.droid.model
 
 import community.flock.kmonad.core.common.Data
 import java.util.UUID

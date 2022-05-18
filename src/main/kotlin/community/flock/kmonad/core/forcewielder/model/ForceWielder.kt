@@ -1,10 +1,10 @@
-package community.flock.kmonad.core.wielders.model
+package community.flock.kmonad.core.forcewielder.model
 
 import community.flock.kmonad.core.common.Data
 import community.flock.kmonad.core.jedi.model.Jedi
 import community.flock.kmonad.core.sith.model.Sith
-import community.flock.kmonad.core.wielders.model.ForceWielder.Type.DARK
-import community.flock.kmonad.core.wielders.model.ForceWielder.Type.LIGHT
+import community.flock.kmonad.core.forcewielder.model.ForceWielder.Type.DARK
+import community.flock.kmonad.core.forcewielder.model.ForceWielder.Type.LIGHT
 import java.util.UUID
 
 data class ForceWielder(

@@ -1,14 +1,14 @@
-package community.flock.kmonad.core.droids
+package community.flock.kmonad.core.droid
 
 import arrow.core.continuations.EffectScope
 import community.flock.kmonad.core.AppException
 import community.flock.kmonad.core.AppException.Conflict
 import community.flock.kmonad.core.AppException.NotFound
-import community.flock.kmonad.core.droids.model.Droid
+import community.flock.kmonad.core.droid.model.Droid
 import kotlinx.coroutines.flow.asFlow
 import java.util.UUID
 
-object TestRepository : Repository {
+object TestRepository : DroidRepository {
 
     const val c3poUUID = "4db46c64-d164-4efe-a2f2-7b2c7c689ded"
     const val r2d2UUID = "3dfd4324-0805-455e-a749-9fea2f9dc18a"
