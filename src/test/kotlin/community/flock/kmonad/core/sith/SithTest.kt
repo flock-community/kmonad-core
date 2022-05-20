@@ -21,7 +21,7 @@ class SithTest {
     @Test
     fun testBindGet() = runBlocking {
         sithContext().bindGet().getOrThrow()
-            .take(2).toList()
+            .take(2)
             .let { (sidious, vader) ->
                 sidious.assertSidious()
                 vader.assertVader()

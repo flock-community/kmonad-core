@@ -26,7 +26,7 @@ class JediTest {
         bindGet()
             .provide(jediContext())
             .runUnsafe()
-            .map { it.take(2).toList() }
+            .map { it.take(2) }
             .map { (luke, yoda) ->
                 luke.assertLuke()
                 yoda.assertYoda()
