@@ -27,7 +27,7 @@ sealed class Option<out A> {
 
 }
 
-fun <A> Option<A>.orNull(): A? = when (this) {
+fun <A> Option<A>.getOrNull(): A? = when (this) {
     is None -> null
     is Some<A> -> this.value
 }

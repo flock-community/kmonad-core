@@ -7,7 +7,6 @@ import community.flock.kmonad.core.common.monads.Either.Companion.left
 import community.flock.kmonad.core.common.monads.Either.Companion.right
 import community.flock.kmonad.core.common.monads.flatMap
 import community.flock.kmonad.core.common.monads.getOrHandle
-import community.flock.kmonad.core.common.monads.orNull
 import community.flock.kmonad.core.forcewielder.model.ForceWielder
 import community.flock.kmonad.core.forcewielder.model.toForceWielder
 import community.flock.kmonad.core.jedi.HasJediRepository
@@ -37,7 +36,7 @@ suspend fun <R> R.getForceWielderByUUID(uuid: UUID): ForceWielder where R : HasJ
         .runUnsafe()
         .map { maybeJedi -> maybeJedi.map { it.toForceWielder() } }
         .flatMap { option -> option.fold({ NotFound(uuid).left() }, { it.right() }) }
-        .orNull()
+        .getOrNull()
     val sith = getSithByUUID(uuid)
         .map { it?.toForceWielder() }
         .getOrNull()
