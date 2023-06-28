@@ -5,9 +5,9 @@ import arrow.core.continuations.effect
 import arrow.core.getOrHandle
 import community.flock.kmonad.core.AppException
 import community.flock.kmonad.core.AppException.BadRequest
-import community.flock.kmonad.core.common.TestLogger
 import community.flock.kmonad.core.common.Logger
-import community.flock.kmonad.core.common.assertLeftEffect
+import community.flock.kmonad.core.common.TestLogger
+import community.flock.kmonad.core.common.assertLeft
 import community.flock.kmonad.core.droid.model.Droid
 import kotlinx.coroutines.flow.take
 import kotlinx.coroutines.flow.toList
@@ -36,7 +36,7 @@ class DroidsTest {
     @Test
     fun testBindGetByUUID() = runTest {
         with(droidContext()) {
-            assertLeftEffect(BadRequest::class) { bindGet("Not a UUID") }
+            assertLeft(BadRequest::class) { bindGet("Not a UUID") }
             val droid = bindGet(TestRepository.c3poUUID).bind()
             droid.assertC3PO()
         }
@@ -52,14 +52,14 @@ class DroidsTest {
     @Test
     fun testBindDelete() = runTest {
         with(droidContext()) {
-            assertLeftEffect(BadRequest::class) { bindDelete("Not a UUID") }
+            assertLeft(BadRequest::class) { bindDelete("Not a UUID") }
             val droid = bindDelete(TestRepository.c3poUUID).bind()
             droid.assertC3PO()
         }
     }
 
     private fun runTest(block: suspend EffectScope<AppException>.() -> Unit): Unit = runBlocking {
-        effect<AppException, Unit> { block() }.toEither().getOrHandle { throw it }
+        effect { block() }.toEither().getOrHandle { throw it }
     }
 
     private fun Droid.assertC3PO() {

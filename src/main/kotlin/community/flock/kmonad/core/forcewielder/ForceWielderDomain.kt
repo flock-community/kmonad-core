@@ -2,27 +2,30 @@ package community.flock.kmonad.core.forcewielder
 
 import community.flock.kmonad.core.AppException.InternalServerError
 import community.flock.kmonad.core.AppException.NotFound
-import community.flock.kmonad.core.common.HasLogger
 import community.flock.kmonad.core.common.monads.Either.Companion.left
 import community.flock.kmonad.core.common.monads.Either.Companion.right
 import community.flock.kmonad.core.common.monads.flatMap
 import community.flock.kmonad.core.common.monads.getOrHandle
 import community.flock.kmonad.core.forcewielder.model.ForceWielder
 import community.flock.kmonad.core.forcewielder.model.toForceWielder
-import community.flock.kmonad.core.jedi.HasJediRepository
+import community.flock.kmonad.core.jedi.JediContext
+import community.flock.kmonad.core.jedi.JediDependencies
 import community.flock.kmonad.core.jedi.getAllJedi
 import community.flock.kmonad.core.jedi.getJediByUUID
-import community.flock.kmonad.core.sith.HasSithRepository
+import community.flock.kmonad.core.sith.SithContext
+import community.flock.kmonad.core.sith.SithDependencies
 import community.flock.kmonad.core.sith.getAllSith
 import community.flock.kmonad.core.sith.getSithByUUID
+import java.util.UUID
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.merge
-import java.util.UUID
 
+interface ForceWielderDependencies : JediDependencies, SithDependencies
+interface ForceWielderContext : ForceWielderDependencies, JediContext, SithContext
 
 @ExperimentalCoroutinesApi
-suspend fun <R> R.getAllForceWielders() where R : HasJediRepository, R : HasSithRepository, R : HasLogger = getAllJedi<R>()
+suspend fun ForceWielderContext.getAllForceWielders() = getAllJedi()
     .provide(this)
     .runUnsafe()
     .getOrHandle { throw it }
@@ -30,8 +33,8 @@ suspend fun <R> R.getAllForceWielders() where R : HasJediRepository, R : HasSith
     .getOrThrow().map { it.toForceWielder() }
     .also { logger.log() }
 
-suspend fun <R> R.getForceWielderByUUID(uuid: UUID): ForceWielder where R : HasJediRepository, R : HasSithRepository, R : HasLogger {
-    val jedi = getJediByUUID<R>(uuid)
+suspend fun ForceWielderContext.getForceWielderByUUID(uuid: UUID): ForceWielder {
+    val jedi = getJediByUUID(uuid)
         .provide(this)
         .runUnsafe()
         .map { maybeJedi -> maybeJedi.map { it.toForceWielder() } }
@@ -49,7 +52,6 @@ suspend fun <R> R.getForceWielderByUUID(uuid: UUID): ForceWielder where R : HasJ
     }
     return forceWielder
 }
-
 
 @ExperimentalCoroutinesApi
 private operator fun Flow<ForceWielder>.plus(flow: Flow<ForceWielder>) = merge(this, flow)

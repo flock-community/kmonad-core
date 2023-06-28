@@ -7,19 +7,17 @@ import community.flock.kmonad.core.common.log
 import community.flock.kmonad.core.droid.model.Droid
 import java.util.UUID
 
+interface DroidDependencies : HasDroidRepository, HasLogger
+interface DroidContext : DroidDependencies
 
-context(EffectScope<AppException>, HasDroidRepository)
+context(EffectScope<AppException>, DroidContext)
 suspend fun getAll() = droidRepository.getAll()
 
-context(EffectScope<AppException>, HasDroidRepository)
+context(EffectScope<AppException>, DroidContext)
 suspend fun getByUUID(uuid: UUID) = droidRepository.getByUUID(uuid)
 
-context(EffectScope<AppException>, HasDroidRepository)
+context(EffectScope<AppException>, DroidContext)
 suspend fun save(droid: Droid) = droidRepository.save(droid)
 
-context(EffectScope<AppException>, HasDroidRepository, HasLogger)
-suspend fun deleteByUUID(uuid: UUID): Droid {
-    val droid = droidRepository.deleteByUUID(uuid)
-    droid.id.log()
-    return droid
-}
+context(EffectScope<AppException>, DroidContext)
+suspend fun deleteByUUID(uuid: UUID) = droidRepository.deleteByUUID(uuid).also { it.id.log() }

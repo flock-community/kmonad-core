@@ -5,19 +5,21 @@ import community.flock.kmonad.core.common.monads.Reader
 import community.flock.kmonad.core.jedi.model.Jedi
 import java.util.UUID
 
+interface JediDependencies : HasJediRepository, HasLogger
+interface JediContext : JediDependencies
 
-fun <R> getAllJedi() where R : HasJediRepository, R : HasLogger = Reader { r: R ->
-    r.jediRepository.getAll().also { it.map { list -> r.logger.log(list.toString()) } }
+fun getAllJedi() = Reader { ctx: JediContext ->
+    ctx.jediRepository.getAll().also { it.map { list -> ctx.logger.log(list.toString()) } }
 }
 
-fun <R> getJediByUUID(uuid: UUID) where R : HasJediRepository = Reader { r: R ->
-    r.jediRepository.getByUUID(uuid)
+fun getJediByUUID(uuid: UUID) = Reader { ctx: JediContext ->
+    ctx.jediRepository.getByUUID(uuid)
 }
 
-fun <R> saveJedi(jedi: Jedi) where R : HasJediRepository = Reader { r: R ->
-    r.jediRepository.save(jedi)
+fun saveJedi(jedi: Jedi) = Reader { ctx: JediContext ->
+    ctx.jediRepository.save(jedi)
 }
 
-fun <R> deleteJediByUUID(uuid: UUID) where R : HasJediRepository = Reader { r: R ->
-    r.jediRepository.deleteByUUID(uuid)
+fun deleteJediByUUID(uuid: UUID) = Reader { ctx: JediContext ->
+    ctx.jediRepository.deleteByUUID(uuid)
 }
